@@ -1,6 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import  Column, String, Boolean, DateTime, Float, Integer,Text, Enum, text
+from sqlalchemy import event
 import uuid
+
 Base = declarative_base()
 
 
@@ -38,7 +40,11 @@ class Product(Base):
         self.owner = owner
         self.productLegal = productLegal
         self.tags = tags
-        self.productID = uuid.uuid4()
 
     def __repr__(self) -> str:
         return f"{self.name} {self.price} {self.description} {self.isFavorite} {self.isFlashSale} {self.category} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags}" 
+
+
+@event.listens_for(Product, "before_insert")
+def productIDToUUID(mapper,connection,target):
+    target.productID = uuid.uuid4()

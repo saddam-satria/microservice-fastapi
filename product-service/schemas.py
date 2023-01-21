@@ -1,6 +1,5 @@
 from pydantic import BaseModel
 
-
 class ProductSchema(BaseModel):
     name : str 
     price : float
@@ -15,3 +14,18 @@ class ProductSchema(BaseModel):
     owner: str 
     productLegal : str = None
     tags : str= None
+
+class ProductSchemaUpdate(ProductSchema):
+    name : str = None 
+    price : float = None 
+    description : str = None 
+    isFavorite : bool = False 
+    isFlashSale : bool = False
+    category : str = None 
+    discount : float = None 
+    discount_type : str = None 
+    likes : int = 0
+    image : str = None 
+    owner : str = None 
+    productLegal : str = None
+    tags : str = None
