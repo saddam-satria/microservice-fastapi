@@ -24,7 +24,7 @@ class Product(Base):
     createdAt = Column(DateTime, server_default=text("NOW()"))
     updatedAt = Column(DateTime, server_onupdate=text("NOW()"))
 
-    def __init__(self, name, price,description, isFavorite, isFlashSale, category,discount,discount_type,likes,image,owner,productLegal,tags):
+    def __init__(self, name, price,description, isFavorite, isFlashSale, category,discount,discount_type,image,owner,productLegal,tags, likes = 0):
         self.name = name
         self.price = price
         self.description = description
