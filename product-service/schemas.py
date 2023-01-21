@@ -4,14 +4,14 @@ from pydantic import BaseModel
 class ProductSchema(BaseModel):
     name : str 
     price : float
-    description : str 
-    isFavorite : bool
-    isFlashSale : bool
+    description : str = None
+    isFavorite : bool = False
+    isFlashSale : bool = False
     category: str 
-    discount: float
-    discount_type: str 
-    likes: int
-    image : str
+    discount: float = None
+    discount_type: str = None
+    likes: int = 0
+    image : str = None
     owner: str 
-    productLegal : str 
-    tags : str
+    productLegal : str = None
+    tags : str= None

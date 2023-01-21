@@ -1,8 +1,8 @@
 """init migration
 
-Revision ID: 656962dae5d3
+Revision ID: 5d54501e6d82
 Revises: 
-Create Date: 2023-01-20 21:38:59.052058
+Create Date: 2023-01-21 18:20:56.722257
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '656962dae5d3'
+revision = '5d54501e6d82'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,7 +27,7 @@ def upgrade() -> None:
     sa.Column('isFlashSale', sa.Boolean(), nullable=True),
     sa.Column('category', sa.String(length=150), nullable=False),
     sa.Column('discount', sa.Float(), nullable=True),
-    sa.Column('discount_type', sa.Enum('currency', 'percentage', name='discount_type'), nullable=True),
+    sa.Column('discount_type', sa.Enum('currency', 'percentage', name='type_of_discount'), nullable=True),
     sa.Column('likes', sa.Integer(), nullable=True),
     sa.Column('image', sa.String(length=255), nullable=True),
     sa.Column('owner', sa.String(length=255), nullable=False),

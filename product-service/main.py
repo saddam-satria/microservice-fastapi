@@ -4,7 +4,7 @@ from database import engine
 import uvicorn
 
 
-app = FastAPI()
+app = FastAPI(docs_url="/doc")
 app.include_router(productRoute)
 
 @app.on_event("startup")
@@ -13,7 +13,7 @@ def startUP():
 
 @app.on_event("shutdown")
 def shutdown():
-    engine.connect().close()
+    engine.dispose()
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host='127.0.0.1', port=8000, reload=True)

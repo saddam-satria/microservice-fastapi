@@ -1,6 +1,8 @@
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import  Column, String, Boolean, DateTime, Float, Integer,Text, Enum, text
+import uuid
 Base = declarative_base()
+
 
 
 class Product(Base):
@@ -13,7 +15,7 @@ class Product(Base):
     isFlashSale = Column(Boolean, default=False)
     category = Column(String(150), nullable=False)
     discount = Column(Float,nullable=True)
-    discount_type = Column(Enum("currency", "percentage",name="discount_type"))
+    discount_type = Column(Enum("currency", "percentage",name="type_of_discount"), nullable=True)
     likes = Column(Integer, default=0)
     image = Column(String(255), nullable=True)
     owner = Column(String(255), nullable=False)
@@ -36,6 +38,7 @@ class Product(Base):
         self.owner = owner
         self.productLegal = productLegal
         self.tags = tags
+        self.productID = uuid.uuid4()
 
     def __repr__(self) -> str:
         return f"{self.name} {self.price} {self.description} {self.isFavorite} {self.isFlashSale} {self.category} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags}" 
