@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException,status
 from database import session
-from models import Product
+from models import Product,Category
 from helpers.response import getReponse
 from schemas import ProductSchema, ProductSchemaUpdate
-from repository import getProductByID,getProductByQuery
+from repository import getProductByID,getProductByQuery,getCategoryByName
 import datetime
 
 productRoute = APIRouter()
@@ -20,8 +20,16 @@ def getProducts(q = None):
 
 @productRoute.post("/")
 def insertProduct(productData : ProductSchema):
-    newProduct = Product(name=productData.name,price=productData.price,description=productData.description,isFavorite=productData.isFavorite,isFlashSale=productData.isFlashSale, category=productData.category, discount=productData.discount, discount_type=productData.discount_type,image=productData.image, owner=productData.owner, productLegal=productData.productLegal, tags=productData.tags)
+    newProduct = Product(name=productData.name,price=productData.price,description=productData.description,isFavorite=productData.isFavorite,isFlashSale=productData.isFlashSale,  discount=productData.discount, discount_type=productData.discount_type,image=productData.image, owner=productData.owner, productLegal=productData.productLegal, tags=productData.tags)
+    category = getCategoryByName(productData.category)
+    
 
+    if category is None:
+        category = Category(productData.category)
+
+   
+    
+    newProduct.product_category_id.append(category)
     session.add(newProduct)
     session.commit()
     return getReponse(data=None, serviceName="post product",payload=productData)
@@ -30,7 +38,7 @@ def insertProduct(productData : ProductSchema):
 def deleteProduct(productID):
     product = getProductByID(productID)
 
-    if product == None: 
+    if product is None: 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=getReponse(serviceName="delete product", errorMessage="product not found", payload=productID,statusCode=status.HTTP_404_NOT_FOUND, responseStatus="error"))
 
 
@@ -41,7 +49,7 @@ def deleteProduct(productID):
 @productRoute.get("/{productID}")
 def getProduct(productID):
     product = getProductByID(productID)
-    if product == None:
+    if product is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=getReponse(serviceName="get product", errorMessage="product not found",payload=productID,responseStatus="error", statusCode=status.HTTP_404_NOT_FOUND))
     return getReponse(serviceName="get product", data=product)
 
@@ -50,7 +58,7 @@ def updateProduct(productID, productData : ProductSchemaUpdate):
     productFilter = session.query(Product).filter(Product.productID == productID)
     product = productFilter.first()
 
-    if product == None: 
+    if product is None: 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=getReponse(serviceName="update product", errorMessage="product not found", payload=productID,statusCode=status.HTTP_404_NOT_FOUND, responseStatus="error"))
 
     product = productFilter.update({
