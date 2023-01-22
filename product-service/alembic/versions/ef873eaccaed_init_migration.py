@@ -1,8 +1,8 @@
 """init migration
 
-Revision ID: 31e5d8876092
+Revision ID: ef873eaccaed
 Revises: 
-Create Date: 2023-01-21 21:51:06.651821
+Create Date: 2023-01-22 21:44:00.157308
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '31e5d8876092'
+revision = 'ef873eaccaed'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -39,15 +39,17 @@ def upgrade() -> None:
     sa.Column('owner', sa.String(length=255), nullable=False),
     sa.Column('productLegal', sa.String(length=255), nullable=True),
     sa.Column('tags', sa.String(length=255), nullable=True),
+    sa.Column('quantity', sa.Integer(), nullable=False),
     sa.Column('createdAt', sa.DateTime(), server_default=sa.text('NOW()'), nullable=True),
     sa.Column('updatedAt', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('productID')
     )
     op.create_table('product_detail',
-    sa.Column('category_id', sa.String(length=50), nullable=True),
-    sa.Column('product_id', sa.String(length=50), nullable=True),
+    sa.Column('category_id', sa.String(length=50), nullable=False),
+    sa.Column('product_id', sa.String(length=50), nullable=False),
     sa.ForeignKeyConstraint(['category_id'], ['category.categoryID'], ),
-    sa.ForeignKeyConstraint(['product_id'], ['product.productID'], )
+    sa.ForeignKeyConstraint(['product_id'], ['product.productID'], ),
+    sa.PrimaryKeyConstraint('category_id', 'product_id')
     )
     # ### end Alembic commands ###
 

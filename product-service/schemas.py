@@ -14,6 +14,7 @@ class ProductSchema(BaseModel):
     owner: str 
     productLegal : str = None
     tags : str= None
+    quantity : int = 0
 
 class ProductSchemaUpdate(ProductSchema):
     name : str = None 
@@ -24,7 +25,6 @@ class ProductSchemaUpdate(ProductSchema):
     category : str = None 
     discount : float = None 
     discount_type : str = None 
-    likes : int = 0
     image : str = None 
     owner : str = None 
     productLegal : str = None

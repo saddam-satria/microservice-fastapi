@@ -10,8 +10,8 @@ Base = declarative_base()
 ProductOnCategory = Table(
     "product_detail",
     Base.metadata,
-    Column("category_id",String(50), ForeignKey("category.categoryID")),
-    Column("product_id",String(50), ForeignKey("product.productID"))
+    Column("category_id",String(50), ForeignKey("category.categoryID"),primary_key=True),
+    Column("product_id",String(50), ForeignKey("product.productID"), primary_key=True)
 )
 
 
@@ -30,11 +30,12 @@ class Product(Base):
     owner = Column(String(255), nullable=False)
     productLegal = Column(String(255), nullable=True)
     tags = Column(String(255), nullable=True)
+    quantity = Column(Integer, nullable=False)
     createdAt = Column(DateTime, server_default=text("NOW()"))
     updatedAt = Column(DateTime, server_onupdate=text("NOW()"))
     product_category_id = relationship("Category",  secondary=ProductOnCategory ,back_populates="category_id")
 
-    def __init__(self, name, price,description, isFavorite, isFlashSale, discount,discount_type,image,owner,productLegal,tags, likes = 0):
+    def __init__(self, name, price,description, isFavorite, isFlashSale, discount,discount_type,image,owner,productLegal,tags,quantity, likes = 0):
         self.name = name
         self.price = price
         self.description = description
@@ -47,9 +48,10 @@ class Product(Base):
         self.owner = owner
         self.productLegal = productLegal
         self.tags = tags
+        self.quantity = quantity
 
     def __repr__(self) -> str:
-        return f"{self.name} {self.price} {self.description} {self.isFavorite} {self.isFlashSale} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags}" 
+        return f"{self.name} {self.price} {self.quantity} {self.description} {self.isFavorite} {self.isFlashSale} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags}" 
 
 
 @event.listens_for(Product, "before_insert")

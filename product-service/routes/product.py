@@ -21,7 +21,7 @@ def getProducts(q = None):
 
 @productRoute.post("/")
 def insertProduct(productData : ProductSchema):
-    newProduct = Product(name=productData.name,price=productData.price,description=productData.description,isFavorite=productData.isFavorite,isFlashSale=productData.isFlashSale,  discount=productData.discount, discount_type=productData.discount_type,image=productData.image, owner=productData.owner, productLegal=productData.productLegal, tags=productData.tags)
+    newProduct = Product(name=productData.name,price=productData.price,quantity=productData.quantity,description=productData.description,isFavorite=productData.isFavorite,isFlashSale=productData.isFlashSale,  discount=productData.discount, discount_type=productData.discount_type,image=productData.image, owner=productData.owner, productLegal=productData.productLegal, tags=productData.tags)
     category = getCategoryByName(productData.category)
     
 
@@ -72,6 +72,7 @@ def updateProduct(productID, productData : ProductSchemaUpdate):
     product.isFavorite = productData.isFavorite if productData.isFavorite else  product.isFavorite
     product.likes = productData.likes if productData.likes else  product.likes
     product.tags = productData.tags if productData.tags else  product.tags
+    product.quantity = productData.quantity if productData.quantity else  product.quantity
     product.productLegal = productData.productLegal if productData.productLegal else  product.productLegal
     product.updatedAt = datetime.datetime.now()
   
