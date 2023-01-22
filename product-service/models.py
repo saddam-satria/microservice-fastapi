@@ -49,7 +49,7 @@ class Product(Base):
         self.tags = tags
 
     def __repr__(self) -> str:
-        return f"{self.name} {self.price} {self.description} {self.isFavorite} {self.isFlashSale} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags} {self.product_category_id}" 
+        return f"{self.name} {self.price} {self.description} {self.isFavorite} {self.isFlashSale} {self.discount} {self.discount_type} {self.likes} {self.image} {self.owner} {self.productLegal} {self.tags}" 
 
 
 @event.listens_for(Product, "before_insert")
@@ -66,6 +66,9 @@ class Category(Base):
 
     def __init__(self, name):
         self.name = name
+    
+    def __repr__(self) -> str:
+        return f"{self.name} {self.categoryID} {self.createdAt}"
 
 
 @event.listens_for(Category, "before_insert")

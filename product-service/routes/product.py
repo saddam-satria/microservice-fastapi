@@ -1,22 +1,23 @@
 from fastapi import APIRouter, HTTPException,status
-from database import session
+from database import session,engine
 from models import Product,Category
 from helpers.response import getReponse
 from schemas import ProductSchema, ProductSchemaUpdate
 from repository import getProductByID,getProductByQuery,getCategoryByName
 import datetime
+from sqlalchemy import text
 
 productRoute = APIRouter()
 
 
 @productRoute.get("/")
 def getProducts(q = None):
-    products = session.query(Product).all()
-
+    products = engine.execute('select product.*, category.name as category, category."categoryID" from product_detail INNER JOIN product ON product."productID"=product_detail.product_id INNER JOIN category ON product_detail.category_id = category."categoryID" ').all()
+    totalProduct = session.query(Product).count()
     if q:
         products = getProductByQuery(q)
 
-    return getReponse(data=products, serviceName="get all products")
+    return getReponse(data=products, serviceName="get all products" ,totalData=totalProduct)
 
 @productRoute.post("/")
 def insertProduct(productData : ProductSchema):
@@ -48,15 +49,14 @@ def deleteProduct(productID):
 
 @productRoute.get("/{productID}")
 def getProduct(productID):
-    product = getProductByID(productID)
+    product = engine.execute(text('select product.*, category.name as category, category."categoryID" from product_detail INNER JOIN product ON product."productID"=product_detail.product_id INNER JOIN category ON product_detail.category_id = category."categoryID" where product_detail.product_id = :productid '), {"productid" : productID}).all()
     if product is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=getReponse(serviceName="get product", errorMessage="product not found",payload=productID,responseStatus="error", statusCode=status.HTTP_404_NOT_FOUND))
     return getReponse(serviceName="get product", data=product)
 
 @productRoute.put("/{productID}")
 def updateProduct(productID, productData : ProductSchemaUpdate):
-    productFilter = session.query(Product).filter(Product.productID == productID)
-    product = productFilter.first()
+    product = getProductByID(productID) 
   
     if product is None: 
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,detail=getReponse(serviceName="update product", errorMessage="product not found", payload=productID,statusCode=status.HTTP_404_NOT_FOUND, responseStatus="error"))
@@ -92,4 +92,4 @@ def updateProduct(productID, productData : ProductSchemaUpdate):
     
    
 
-    return getReponse(serviceName="update product", data=product, payload=productData)
+    return getReponse(serviceName="update product", data=None, payload=productData)
