@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException,status
-from database import session,engine
-from models import Product,Category, Base
+from database import session
+from models import Product,Category
 from helpers.response import getReponse
 from schemas import ProductSchema, ProductSchemaUpdate
 from repository import getProductByID,getProductByQuery,getCategoryByName

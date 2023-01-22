@@ -1,11 +1,12 @@
 from fastapi import FastAPI
-from routes import productRoute
+from route import routing
 from database import engine
 import uvicorn
 
 
 app = FastAPI(docs_url="/doc")
-app.include_router(productRoute)
+routing(app)
+
 
 @app.on_event("startup")
 def startUP():
