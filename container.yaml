@@ -3,7 +3,7 @@ version: '3.2'
 services:
   product_db:
     image: postgres:14.6-alpine
-    container: product_database
+    container_name: product_database
     ports:
       - "5432:5432"
     restart: unless-stopped
@@ -13,7 +13,7 @@ services:
       - PGDATA=/data/postgres
       - POSTGRES_DB=product
   product_service:
-    container: product_service
+    container_name: product_service
     build: 
       context: product-service
     ports: 
