@@ -1,0 +1,26 @@
+version: '3.2'
+
+services:
+  product_db:
+    image: postgres:14.6-alpine
+    container: product_database
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=product_service
+      - POSTGRES_PASSWORD=product 
+      - PGDATA=/data/postgres
+      - POSTGRES_DB=product
+  product_service:
+    container: product_service
+    build: 
+      context: product-service
+    ports: 
+      - '8000:5000'  
+    depends_on:
+      product_db
+    restart: unless-stopped
+    environment:
+      - DATABASE_URI=postgresql+psycopg2://product_service:product@product_db:5432/product
+      - MODE=production
