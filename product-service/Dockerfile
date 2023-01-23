@@ -9,6 +9,7 @@ RUN apt update && \
     pip install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
 COPY alembic ./
+COPY alembic.ini ./
 
 RUN alembic upgrade head
 
