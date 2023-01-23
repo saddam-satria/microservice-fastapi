@@ -9,11 +9,4 @@ RUN apt update && \
     pip3 install --upgrade pip && \
     pip3 install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
-COPY alembic ./
-COPY alembic.ini alembic.ini
-
-RUN alembic upgrade head
-
 COPY . ./
-
-CMD [ "python3", "main.py" ]
