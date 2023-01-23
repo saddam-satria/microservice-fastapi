@@ -4,8 +4,7 @@ WORKDIR /product-service
 
 COPY requirements.txt ./
 
-RUN apt update \
-    && pip install --upgrade pip \
+RUN pip install --upgrade pip \
     && pip install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
 COPY alembic ./
