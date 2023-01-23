@@ -12,6 +12,8 @@ services:
       - POSTGRES_PASSWORD=product 
       - PGDATA=/data/postgres
       - POSTGRES_DB=product
+    networks:
+      - product_network
   product_service:
     container_name: product_service
     build: 
@@ -25,7 +27,9 @@ services:
       - MODE=production
       - PATH=/directory/bin:$PATH
     command: "python3 main.py"
+    networks:
+      - product_network
 
-volumes:
-    postgres:
-    pgadmin:
+networks:
+  product_network:
+    driver : bridge
