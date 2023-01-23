@@ -4,7 +4,8 @@ WORKDIR /product-service
 
 COPY requirements.txt ./
 
-RUN pip install --no-cache-dir --upgrade -r /product-service/requirements.txt
+RUN apt install libpq-dev python3-dev && \ 
+    pip install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
 COPY alembic ./
 
