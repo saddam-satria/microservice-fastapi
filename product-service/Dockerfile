@@ -4,7 +4,7 @@ WORKDIR /product-service
 
 COPY requirements.txt ./
 
-RUN apt-get update \
+RUN apt update \
     && pip install --upgrade pip \
     && pip install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
