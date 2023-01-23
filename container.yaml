@@ -19,7 +19,7 @@ services:
     ports: 
       - '8000:5000'  
     depends_on:
-      product_db
+      - product_db
     restart: unless-stopped
     environment:
       - DATABASE_URI=postgresql+psycopg2://product_service:product@product_db:5432/product
