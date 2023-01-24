@@ -33,8 +33,7 @@ services:
       - product_network
     restart: unless-stopped
   proxy:
-    build:
-      image: nginx
+    image: nginx
     ports:
       - 80:80
     volumes:
