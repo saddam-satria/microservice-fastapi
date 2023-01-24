@@ -14,6 +14,8 @@ services:
       - POSTGRES_DB=product
     networks:
       - product_network
+    volumes:
+      - ./product_volume:/var/lib/postgresql
   product_service:
     container_name: product_service
     build: 
@@ -29,7 +31,11 @@ services:
     command: "python3 main.py"
     networks:
       - product_network
+    restart: always
 
 networks:
   product_network:
     driver : bridge
+
+volumes:
+  product_volume:
