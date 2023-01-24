@@ -32,7 +32,18 @@ services:
     networks:
       - product_network
     restart: unless-stopped
-
+  proxy:
+    build:
+      image: nginx
+    ports:
+      - 80:80
+    volumes:
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - product_service
+    container_name: proxy
+    networks:
+      - product_network
 networks:
   product_network:
     driver : bridge
