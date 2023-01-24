@@ -41,7 +41,8 @@ services:
     depends_on:
       - product_service
     container_name: proxy
-  
+    networks:
+      - product_network
 networks:
   product_network:
     driver : bridge
