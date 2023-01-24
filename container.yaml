@@ -44,7 +44,7 @@ services:
   
 networks:
   product_network:
-    driver : standalone
+    driver : bridge
 
 volumes:
   product_volume:
