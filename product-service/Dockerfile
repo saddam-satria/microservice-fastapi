@@ -10,6 +10,3 @@ RUN apt update && \
     pip3 install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
 COPY . ./
-
-
-CMD [ "python3", "main.py" ]
