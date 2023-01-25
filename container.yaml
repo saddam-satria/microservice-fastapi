@@ -28,7 +28,6 @@ services:
       - DATABASE_URI=postgresql+psycopg2://product_service:product@product_db:5432/product
       - MODE=production
       - PATH=/directory/bin:$PATH
-    command: "python3 main.py"
     networks:
       - product_network
     restart: unless-stopped
