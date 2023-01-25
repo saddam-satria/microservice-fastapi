@@ -43,6 +43,7 @@ services:
     container_name: proxy
     networks:
       - product_network
+    restart: always
 networks:
   product_network:
     driver : bridge
