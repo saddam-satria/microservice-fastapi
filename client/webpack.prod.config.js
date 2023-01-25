@@ -1,9 +1,10 @@
 const { resolvePath } = require('./constant');
-const webpack = require('webpack');
+
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
-require('dotenv').config({ path: './.env' });
+
+process.env.NODE_ENV = 'production';
 
 const rules = [
   {
@@ -90,9 +91,6 @@ module.exports = {
     new MiniCSSExtractPlugin({
       filename: 'assets/css/main.[contenthash:8].css',
       chunkFilename: '[id].css',
-    }),
-    new webpack.DefinePlugin({
-      'process.env': JSON.stringify(process.env),
     }),
     new CopyPlugin({
       patterns: [
