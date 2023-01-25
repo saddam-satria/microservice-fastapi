@@ -30,7 +30,6 @@ services:
       - PATH=/directory/bin:$PATH
     networks:
       - product_network
-    restart: unless-stopped
   proxy:
     image: nginx
     ports:
