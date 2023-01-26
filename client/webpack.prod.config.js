@@ -83,7 +83,7 @@ module.exports = {
   devtool: 'source-map',
   plugins: [
     new webpack.DefinePlugin({
-      process: { env: {} }
+      'process.env': JSON.stringify(process.env),
     }),
     new htmlWebpackPlugin({
       filename: 'index.html',
