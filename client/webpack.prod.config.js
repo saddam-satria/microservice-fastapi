@@ -1,5 +1,5 @@
 const { resolvePath } = require('./constant');
-
+const webpack = require('webpack')
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCSSExtractPlugin = require('mini-css-extract-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
@@ -82,6 +82,9 @@ module.exports = {
   },
   devtool: 'source-map',
   plugins: [
+    new webpack.DefinePlugin({
+      process: { env: {} }
+    }),
     new htmlWebpackPlugin({
       filename: 'index.html',
       title: 'react boilerplate',
