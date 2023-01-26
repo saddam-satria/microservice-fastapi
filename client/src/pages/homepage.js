@@ -3,7 +3,7 @@ import UseFetch from "../hooks/useFetch"
 
 function Homepage() {
 
-  let products = UseFetch()
+  let products = UseFetch("product")
   products = products.data
 
   return (
