@@ -41,6 +41,7 @@ services:
     container_name: proxy
     networks:
       - product_network
+      - client_network
     restart: always
   client:
     build:
@@ -54,8 +55,12 @@ services:
     depends_on:
       - proxy
     container_name: client
+    networks:
+      - client_network
 networks:
   product_network:
+    driver : bridge
+  client_network:
     driver : bridge
 
 volumes:
