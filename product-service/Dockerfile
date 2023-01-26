@@ -10,3 +10,6 @@ RUN apt update && \
     pip3 install --no-cache-dir --upgrade -r /product-service/requirements.txt
 
 COPY . ./
+
+
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]

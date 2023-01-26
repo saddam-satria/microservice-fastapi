@@ -27,7 +27,6 @@ services:
       - DATABASE_URI=postgresql+psycopg2://product_service:product@product_db:5432/product
       - MODE=production
       - PATH=/directory/bin:$PATH
-    command: "python3 main.py"
     networks:
       - product_network
     restart: unless-stopped
@@ -47,7 +46,7 @@ services:
     build:
       context: client 
     ports:
-      - "127.0.0.1:80:8080"
+      - "127.0.0.1:8080:8080"
     volumes:
       - ./client/web_server.conf:/etc/nginx/conf.d/default.conf
     environment:
