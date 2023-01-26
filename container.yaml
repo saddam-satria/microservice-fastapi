@@ -50,8 +50,6 @@ services:
       - "127.0.0.1:8080:8080"
     volumes:
       - ./client/web_server.conf:/etc/nginx/conf.d/default.conf
-    environment:
-      - API_SERVER=http://proxy/v1/
     depends_on:
       - proxy
     container_name: client
